@@ -1285,6 +1285,7 @@ class ReactImageLightbox extends Component {
       animationDuration,
       clickOutsideToClose,
       discourageDownloads,
+      disableRightClick,
       enableZoom,
       imageTitle,
       nextSrc,
@@ -1422,6 +1423,7 @@ class ReactImageLightbox extends Component {
             onDoubleClick={this.handleImageDoubleClick}
             onWheel={this.handleImageMouseWheel}
             onDragStart={e => e.preventDefault()}
+            onContextMenu={e => disableRightClick ? e.preventDefault() : null}
             style={imageStyle}
             src={imageSrc}
             key={imageSrc + keyEndings[srcType]}
@@ -1737,6 +1739,8 @@ ReactImageLightbox.propTypes = {
   // Enable download discouragement (prevents [right-click -> Save Image As...])
   discourageDownloads: PropTypes.bool,
 
+  disableRightClick: PropTypes.bool,
+
   //-----------------------------
   // Animation settings
   //-----------------------------
@@ -1824,6 +1828,7 @@ ReactImageLightbox.defaultProps = {
   clickOutsideToClose: true,
   closeLabel: 'Close lightbox',
   discourageDownloads: false,
+  disableRightClick: false,
   enableZoom: true,
   imagePadding: 10,
   imageCrossOrigin: null,
