@@ -1,6 +1,6 @@
 {
   "name": "@picryl/react-image-lightbox",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A lightbox component for React.js",
   "scripts": {
     "build": "npm run clean && cross-env NODE_ENV=production TARGET=umd webpack --bail",

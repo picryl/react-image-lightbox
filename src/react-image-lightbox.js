@@ -1288,6 +1288,7 @@ class ReactImageLightbox extends Component {
       disableRightClick,
       enableZoom,
       imageTitle,
+      imageAlt,
       nextSrc,
       prevSrc,
       toolbarButtons,
@@ -1427,9 +1428,7 @@ class ReactImageLightbox extends Component {
             style={imageStyle}
             src={imageSrc}
             key={imageSrc + keyEndings[srcType]}
-            alt={
-              typeof imageTitle === 'string' ? imageTitle : translate('Image')
-            }
+            alt={imageAlt}
             draggable={false}
           />
         );
@@ -1772,6 +1771,7 @@ ReactImageLightbox.propTypes = {
 
   // Image title
   imageTitle: PropTypes.node,
+  imageAlt: PropTypes.string,
 
   // Image caption
   imageCaption: PropTypes.node,
@@ -1819,6 +1819,7 @@ ReactImageLightbox.propTypes = {
 
 ReactImageLightbox.defaultProps = {
   imageTitle: null,
+  imageAlt: null,
   imageCaption: null,
   toolbarButtons: null,
   reactModalProps: {},
