@@ -1,6 +1,6 @@
 {
   "name": "@picryl/react-image-lightbox",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "A lightbox component for React.js",
   "scripts": {
     "build": "npm run clean && cross-env NODE_ENV=production TARGET=umd webpack --bail",
@@ -11,8 +11,10 @@
     "lint": "eslint \"{src,examples}/**/*.{js,jsx}\"",
     "prettier": "prettier --single-quote --trailing-comma es5 --write \"{src,examples}/**/*.{js,jsx,css,scss}\"",
     "prepublishOnly": "npm run lint && npm run test && npm run build",
-    "test": "",
+    "test": "jest --runInBand",
     "test:watch": "jest --watchAll",
+    "test:package": "node scripts/test-package.js",
+    "release:pack": "node scripts/pack-release.js",
     "deploy": "npm run build:demo && gh-pages -d build"
   },
   "main": "dist/main.js",
@@ -52,6 +54,7 @@
     ]
   },
   "dependencies": {
+    "babel-runtime": "^6.26.0",
     "prop-types": "^15.5.8",
     "react-modal": "^3.1.10"
   },

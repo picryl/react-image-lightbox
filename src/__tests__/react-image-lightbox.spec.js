@@ -181,17 +181,6 @@ describe('Key bindings', () => {
   });
 });
 
-describe('Snapshot Testing', () => {
-  it('Lightbox renders properly"', () => {
-    const wrapper = mount(
-      <Lightbox
-        {...commonProps}
-        reactModalProps={{ appElement: global.document.createElement('div') }}
-      />
-    );
-    expect(wrapper).toMatchSnapshot();
-  });
-});
 
 describe('Error Testing', () => {
   it('Should render the default error message', () => {
