@@ -16,6 +16,64 @@ Features
 - Mobile friendly, with pinch to zoom and swipe (Thanks, [@webcarrot](https://github.com/webcarrot)!)
 - No external CSS
 
+## Scoped fork maintenance
+
+The compatible scoped release line is `v4-patched`, not `master` (which
+contains the upstream 5.0.0 CSS-extraction changes). Version 5.0.3 adds the
+production `babel-runtime` dependency required by the bundled
+`isomorphic-style-loader` helpers. Component code, automatic CSS insertion,
+`imageAlt`, `disableRightClick`, and React 15/16 peer ranges are unchanged.
+React 19 is outside the declared peer range; consumers must verify their
+own integration rather than treating a packaging fix as a compatibility upgrade.
+
+### Build and isolated package verification
+
+Use isolated **Node 8.17.0 / npm 6** for this historical Webpack 3 /
+node-sass 4.7.2 toolchain. Node 8 is EOL: use it only for this token-free
+legacy build, not an application runtime. Do not run the deployment scripts.
+
+```sh
+npm ci --ignore-scripts --no-audit
+node node_modules/node-sass/scripts/install.js
+npm run lint
+npm test
+npm run build
+npm run release:pack
+npm run test:package
+```
+
+`test:package` installs the final archive with production dependencies and
+React 16.14 in a fresh temporary directory/cache outside the checkout.
+It checks the real root import, CSS insertion, title/caption, and close/unmount.
+Build-time Babel cannot resolve from that installed package. JSDOM does not
+prove image loading; also exercise a browser fixture before release.
+
+### Trusted owner publication
+
+Source CI is public, token-free for package operations, and never publishes
+or uploads release archives. Do not grant this public fork private package
+read/write permissions or inject publisher credentials into source CI.
+
+1. A trusted owner reviews the exact `v4-patched`-based source revision and
+   performs the build/checks above in an environment without credentials.
+2. `release:pack` stages only `dist/main.js`, package metadata, README,
+   CHANGELOG and LICENSE. It omits the repository association so a GitHub
+   package does not inherit this public repository's access. Record its
+   exact source SHA, file list and reported SHA512. Test these final bytes.
+3. In a separate trusted owner environment, use approved registry-only
+   authentication to check that the version is absent, then publish that
+   exact archive with lifecycle scripts disabled:
+   `npm publish ./picryl-react-image-lightbox-5.0.3.tgz --ignore-scripts --registry=https://npm.pkg.github.com`.
+   Never put credentials in arguments, logs, the checkout, or the archive.
+4. Verify actual GitHub package visibility is non-public (Private or
+   owner-approved Internal), no public source inheritance/Actions grant,
+   and the required private consumer access. Do not change unrelated ACLs.
+5. Download the served archive, compare SHA512 with the tested archive,
+   and repeat the isolated production install/browser smoke. Never overwrite
+   an existing version. Consumers move coherently from scoped 5.0.2 to
+   scoped 5.0.3 and its new served integrity using their existing lock tooling;
+   they must not retain the 5.0.2 hash or substitute the unscoped package.
+
 ## Example
 
 ```jsx

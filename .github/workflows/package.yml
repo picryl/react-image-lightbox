@@ -1,0 +1,34 @@
+name: Package contract
+
+on:
+  pull_request:
+    branches: [v4-patched]
+  push:
+    branches: [v4-patched, alex/private-github-packages]
+
+# No private package grant, registry credential, publisher, or artifact upload.
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 8.17.0
+      - name: Verify legacy source and isolated production package
+        shell: bash
+        run: |
+          env -i HOME="$RUNNER_TEMP/lightbox-home" PATH="$PATH" bash --noprofile --norc -e -c '
+            npm ci --ignore-scripts --no-audit
+            node node_modules/node-sass/scripts/install.js
+            npm run lint
+            npm test
+            npm run build
+            npm run release:pack
+            npm run test:package
+          '

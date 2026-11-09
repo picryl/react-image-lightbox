@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## Scoped 5.0.3 (2026-11-09)
+
+- Declare `babel-runtime` as a production dependency for the external
+  stringify/slicedToArray helpers emitted from `isomorphic-style-loader`.
+  Preserve the `v4-patched` 5.0.2 component, export and automatic CSS behavior.
+- Add a final-archive production-install regression and token-free source CI.
+  Remove the stale full-tree snapshot of incidental props; retain behavioral
+  component tests instead of re-pinning the snapshot.
+- Add initially unlinked release packing and a separate trusted owner
+  publication procedure; this public fork receives no private registry grant.
+
 <a name="4.6.0"></a>
 # [4.6.0](https://github.com/fritz-c/react-image-lightbox/compare/v4.5.0...v4.6.0) (2018-03-09)
 
